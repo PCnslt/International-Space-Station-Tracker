@@ -41,24 +41,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (locationInfo === 'Location not found' && lat < 60 && lat > -60) {
         locationInfo = 'Over the Ocean';
       }
-      issMarker.bindPopup(`
-        <div class="custom-popup">
-          <h3 style="margin:0 0 12px 0; display:flex; align-items:center; gap:8px; color:#58a6ff;">
-            <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
-              <path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/>
+    issMarker.bindPopup(`
+      <div class="custom-popup">
+        <h3 style="margin:0 0 12px 0; display:flex; align-items:center; gap:8px; color:#58a6ff;">
+          <svg style="width:24px;height:24px;" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/>
+          </svg>
+          ISS Current Position
+        </h3>
+        <div style="padding:8px 0; border-top:1px solid rgba(255,255,255,0.1);">
+          <div style="display:flex; align-items:center; gap:8px; padding:8px 0;">
+            <svg style="width:20px;height:20px;opacity:0.8;" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M12 20a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8m0-18a10 10 0 0 0-10 10a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 10a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 9a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 12Z"/>
             </svg>
-            ISS Current Position
-          </h3>
-          <div style="padding:8px 0; border-top:1px solid rgba(255,255,255,0.1);">
-            <div style="display:flex; align-items:center; gap:8px; padding:8px 0;">
-              <svg style="width:20px;height:20px;opacity:0.8;" viewBox="0 0 24 24">
-                <path fill="currentColor" d="M12 20a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8m0-18a10 10 0 0 0-10 10a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 10a1.5 1.5 0 0 1-1.5-1.5A1.5 1.5 0 0 1 12 9a1.5 1.5 0 0 1 1.5 1.5A1.5 1.5 0 0 1 12 12Z"/>
-              </svg>
-              ${locationInfo}
-            </div>
+            ${locationInfo}
           </div>
         </div>
-      `).openPopup();
+      </div>
+    `, { autoClose: false, closeOnClick: false }).openPopup();
     } catch (err) {
       console.error('Error fetching location data:', err);
     }
@@ -82,11 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const lng = parseFloat(data.longitude);
 
       console.log('Latitude:', lat, 'Longitude:', lng);
-      issMarker.setLatLng([lat, lng]);
+    issMarker.setLatLng([lat, lng]);
+    
+    // Update popup with latest position data
+    fetchLocation(lat, lng);
 
-      latEl.textContent = lat.toFixed(4);
-      lngEl.textContent = lng.toFixed(4);
-      timeEl.textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
+    latEl.textContent = lat.toFixed(4);
+    lngEl.textContent = lng.toFixed(4);
+    timeEl.textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
     } catch (err) {
       console.error('Error fetching ISS data:', err);
     }
