@@ -1,15 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
   const map = L.map('map', {
-    worldCopyJump: true,
+    worldCopyJump: false,
     minZoom: 2,
-    maxZoom: 7,
-    zoomControl: true,
-    attributionControl: false
+    maxZoom: 2,
+    zoomControl: false,
+    attributionControl: false,
+    dragging: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false
   }).setView([0, 0], 2);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 7,
-    minZoom: 2
+    maxZoom: 2,
+    minZoom: 2,
+    noWrap: true
   }).addTo(map);
 
   function addGridLines() {
