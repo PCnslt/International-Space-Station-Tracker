@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
       </div>
-    `, { autoClose: false, closeOnClick: false }).openPopup();
+    `, { autoClose: true, closeOnClick: true });
     } catch (err) {
       console.error('Error fetching location data:', err);
     }
