@@ -2,34 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>3D ISS Tracker</title>
-  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ISS Live Tracker — Real-time International Space Station</title>
+  <meta name="description" content="Live, real-time tracking of the International Space Station: position, altitude, velocity, orbit and sunlight status, refreshed every 2 seconds." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="grid-container">
-    <div id="map"></div>
-    <div class="info-panel">
-    <h1>International Space Station Tracker</h1>
-    <div class="data-display">
-      <div class="data-item">
-        <span class="label">Latitude:</span>
-        <span id="iss-lat" class="value">–</span>
-      </div>
-      <div class="data-item">
-        <span class="label">Longitude:</span>
-        <span id="iss-lng" class="value">–</span>
-      </div>
-      <div class="data-item">
-        <span class="label">Last Updated:</span>
-        <span id="last-updated" class="value">–</span>
+  <div id="map"></div>
+
+  <header class="topbar glass">
+    <div class="brand">
+      <div class="brand-ico">🛰️</div>
+      <div>
+        <h1>ISS Live Tracker</h1>
+        <p>Real-time position of the International Space Station</p>
       </div>
     </div>
-  </div>
+    <div class="live" id="live" title="Live data, refreshed every 2 seconds"><span class="dot"></span>LIVE</div>
+  </header>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <button class="recenter glass" id="recenter" title="Recenter map on the ISS">⌖ Recenter</button>
+
+  <section class="panel glass">
+    <div class="panel-head">
+      <h2>Live telemetry</h2>
+      <span class="updated">Updated <b id="last-updated">—</b></span>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="ico">📍</div><div><span class="val" id="iss-lat">—</span><span class="lbl">Latitude</span></div></div>
+      <div class="stat"><div class="ico">🧭</div><div><span class="val" id="iss-lng">—</span><span class="lbl">Longitude</span></div></div>
+      <div class="stat"><div class="ico">📡</div><div><span class="val" id="iss-alt">—</span><span class="lbl">Altitude</span></div></div>
+      <div class="stat"><div class="ico">🚀</div><div><span class="val" id="iss-vel">—</span><span class="lbl">Velocity</span></div></div>
+      <div class="stat"><div class="ico">🛰️</div><div><span class="val" id="iss-period">—</span><span class="lbl">Orbital period</span></div></div>
+      <div class="stat"><div class="ico">🔄</div><div><span class="val" id="iss-orbits">—</span><span class="lbl">Orbits / day</span></div></div>
+      <div class="stat"><div class="ico">🌐</div><div><span class="val" id="iss-foot">—</span><span class="lbl">Footprint Ø</span></div></div>
+      <div class="stat"><div class="ico">💡</div><div><span class="val" id="iss-sun">—</span><span class="lbl">Sunlight</span></div></div>
+    </div>
+
+    <div class="overline">
+      <span class="ol-lbl">Currently over</span>
+      <span id="iss-location">Locating…</span>
+    </div>
+
+    <button class="about-toggle" id="aboutBtn">What am I looking at?<span class="chev">▾</span></button>
+
+    <div class="about" id="about" hidden>
+      <h3>About this tracker</h3>
+      <p>The <b>International Space Station</b> orbits about <b>420 km</b> above Earth at roughly <b>28,000 km/h</b> — fast enough to circle the planet about <b>16 times a day</b>, once every ~90 minutes.</p>
+      <p>This map shows where the ISS is <b>right now</b>. Its position is fetched every 2 seconds and plotted with a glowing trail tracing its recent ground track. The <b>Sunlight</b> reading tells you whether the station is in daylight or passing through Earth's shadow.</p>
+      <p class="src"><b>Data:</b> wheretheiss.at · <b>Place names:</b> OpenStreetMap Nominatim · <b>Map:</b> CARTO / OpenStreetMap</p>
+      <p class="src"><b>Tech:</b> static HTML / CSS / JS + Leaflet, auto-deployed to GitHub Pages via GitHub Actions.</p>
+    </div>
+  </section>
+
+  <footer class="credits">© OpenStreetMap contributors · CARTO · Data: wheretheiss.at</footer>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="app.js"></script>
 </body>
